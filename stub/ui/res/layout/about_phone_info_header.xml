@@ -38,14 +38,14 @@
             android:padding="18dp">
 
             <ImageView
-                android:layout_width="56dp"
-                android:layout_height="56dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="bottom|end"
-                android:layout_marginEnd="-24dp"
-                android:layout_marginBottom="-24dp"
+                android:layout_marginEnd="@dimen/about_device_silhouette_margin_end"
+                android:layout_marginBottom="@dimen/about_device_silhouette_margin_bottom"
                 android:alpha="0.35"
                 android:importantForAccessibility="no"
-                android:src="@drawable/ic_about_device"
+                android:src="@drawable/about_device_silhouette"
                 android:tint="@color/about_tile_accent" />
 
             <TextView

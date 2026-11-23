@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright (C) 2026 DerpFest Project
+  SPDX-License-Identifier: Apache-2.0
+-->
+<!-- Generic phone outline for the About phone device tile. Devices can
+     overlay this drawable, and the about_device_silhouette_margin_* dimens,
+     with their own silhouette. The ImageView tints it. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="58dp"
+    android:height="98dp"
+    android:viewportWidth="58"
+    android:viewportHeight="98">
+
+    <path
+        android:pathData="M12,2 h34 a10,10 0 0 1 10,10 v74 a10,10 0 0 1 -10,10 h-34 a10,10 0 0 1 -10,-10 v-74 a10,10 0 0 1 10,-10 z"
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="2" />
+
+    <path
+        android:pathData="M11,13 a3,3 0 1,0 6,0 a3,3 0 1,0 -6,0 z"
+        android:fillColor="#FFFFFFFF" />
+</vector>

@@ -23,7 +23,7 @@
 
     <!-- About Phone Header -->
     <string name="derpfest_device_title">Пристрій</string>
-    <string name="derpfest_memory_storage_title">БАРАН</string>
+    <string name="derpfest_memory_storage_title">Пам\'ять і сховище</string>
     <string name="derpfest_screen_res_title">Роздільна здатність</string>
 
         <!-- My Device - Phone Number Category -->

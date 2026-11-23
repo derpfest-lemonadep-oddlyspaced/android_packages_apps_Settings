@@ -20,7 +20,7 @@
 
     <!-- About Phone Header -->
     <string name="derpfest_device_title">裝置</string>
-    <string name="derpfest_memory_storage_title">記憶體</string>
+    <string name="derpfest_memory_storage_title">記憶體與儲存空間</string>
     <string name="derpfest_battery_size_title">電池容量</string>
     <string name="derpfest_screen_res_title">螢幕解析度</string>
 

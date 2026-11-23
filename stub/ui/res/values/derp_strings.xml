@@ -16,7 +16,7 @@
     <string name="more_device_info">More info</string>
 
     <string name="derpfest_device_title">Device</string>
-    <string name="derpfest_memory_storage_title">Memory</string>
+    <string name="derpfest_memory_storage_title">Memory &amp; storage</string>
     <string name="derpfest_battery_size_title">Battery</string>
     <string name="derpfest_screen_res_title">Display</string>
 
