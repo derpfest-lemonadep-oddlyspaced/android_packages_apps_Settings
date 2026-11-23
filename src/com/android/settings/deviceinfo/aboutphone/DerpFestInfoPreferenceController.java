@@ -17,9 +17,14 @@
 package com.android.settings.deviceinfo.aboutphone;
 
 import android.content.Context;
+import android.graphics.Point;
 import android.os.Build;
 import android.provider.Settings;
 import android.os.SystemProperties;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.TextUtils;
+import android.text.style.RelativeSizeSpan;
 import android.view.View;
 import android.widget.TextView;
 
@@ -43,6 +48,7 @@ public class DerpFestInfoPreferenceController extends AbstractPreferenceControll
     
     private Fragment mFragment;
     private TextView mDeviceNameView;
+    private TextView mDeviceDetailView;
     private ValidatedEditTextPreference mDeviceNamePreference;
 
     public DerpFestInfoPreferenceController(Context context) {
@@ -58,25 +64,58 @@ public class DerpFestInfoPreferenceController extends AbstractPreferenceControll
         super.displayPreference(screen);
         final LayoutPreference derpfestInfoPreference = screen.findPreference(KEY_DERPFEST_INFO);
         final TextView device = (TextView) derpfestInfoPreference.findViewById(R.id.device_summary);
+        final TextView detail = (TextView) derpfestInfoPreference.findViewById(R.id.device_detail);
+        final View deviceTile = derpfestInfoPreference.findViewById(R.id.device_tile);
         final TextView storage = (TextView) derpfestInfoPreference.findViewById(R.id.memory_storage_summary);
         final TextView battery = (TextView) derpfestInfoPreference.findViewById(R.id.battery_size_summary);
         final TextView infoScreen = (TextView) derpfestInfoPreference.findViewById(R.id.screen_res_summary);
-        
+        final TextView screenClass = (TextView) derpfestInfoPreference.findViewById(R.id.screen_class);
+
         // Display device name (editable) instead of model
         mDeviceNameView = device;
+        mDeviceDetailView = detail;
         updateDeviceName();
-        
-        // Make device name clickable to edit
-        if (mFragment != null && mFragment.getContext() != null && 
+
+        // Make the device tile clickable to edit the name
+        if (mFragment != null && mFragment.getContext() != null &&
             mFragment.getContext().getResources().getBoolean(R.bool.config_show_device_name)) {
-            device.setClickable(true);
-            device.setFocusable(true);
-            device.setOnClickListener(v -> showDeviceNameDialog());
+            deviceTile.setClickable(true);
+            deviceTile.setFocusable(true);
+            deviceTile.setOnClickListener(v -> showDeviceNameDialog());
+        } else {
+            deviceTile.setForeground(null);
         }
-        
-        storage.setText(String.valueOf(SpecUtils.getTotalInternalMemorySize()) + "GB ROM + " + String.valueOf(SpecUtils.getTotalRAM()) + "GB RAM");
-        battery.setText(SpecUtils.getBatteryCapacity(mContext) + " mAh");
-        infoScreen.setText(SpecUtils.getScreenRes(mContext));
+
+        storage.setText(TextUtils.expandTemplate(
+                mContext.getText(R.string.derpfest_memory_storage_summary),
+                withUnit(String.valueOf(SpecUtils.getTotalRAM()), "GB"),
+                withUnit(SpecUtils.getTotalInternalMemorySize(), "GB")));
+        battery.setText(withUnit(String.valueOf(SpecUtils.getBatteryCapacity(mContext)), "mAh"));
+
+        Point size = SpecUtils.getScreenSize(mContext);
+        infoScreen.setText(size.x + " × " + size.y);
+        String label = getScreenClass(Math.min(size.x, size.y));
+        screenClass.setText(label);
+        screenClass.setVisibility(label != null ? View.VISIBLE : View.GONE);
+    }
+
+    /** Sets the unit smaller than the value, as in 12 GB. */
+    private static CharSequence withUnit(String value, String unit) {
+        SpannableString text = new SpannableString(value + "\u00a0" + unit);
+        text.setSpan(new RelativeSizeSpan(0.65f), value.length(), text.length(),
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        return text;
+    }
+
+    private static String getScreenClass(int shortSide) {
+        if (shortSide >= 1440) {
+            return "QHD+";
+        } else if (shortSide >= 1080) {
+            return "FHD+";
+        } else if (shortSide >= 720) {
+            return "HD+";
+        }
+        return null;
     }
 
     private void updateDeviceName() {
@@ -89,6 +128,10 @@ public class DerpFestInfoPreferenceController extends AbstractPreferenceControll
             deviceName = Build.MODEL;
         }
         mDeviceNameView.setText(deviceName);
+        if (mDeviceDetailView != null) {
+            mDeviceDetailView.setText(deviceName.equals(Build.MODEL) ? Build.DEVICE
+                    : mContext.getString(R.string.derpfest_device_detail, Build.MODEL, Build.DEVICE));
+        }
     }
 
     private void showDeviceNameDialog() {

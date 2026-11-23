@@ -107,13 +107,17 @@ public class SpecUtils {
     }
 
     public static String getScreenRes(Context context) {
+        Point size = getScreenSize(context);
+        return size.x + " x " + size.y;
+    }
+
+    public static Point getScreenSize(Context context) {
         WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         Display display = windowManager.getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
-        int screenWidth = size.x;
-        int screenHeight = size.y + getNavigationBarHeight(windowManager);
-        return screenWidth + " x " + screenHeight;
+        size.y += getNavigationBarHeight(windowManager);
+        return size;
     }
 
     private static int getNavigationBarHeight(WindowManager wm) {

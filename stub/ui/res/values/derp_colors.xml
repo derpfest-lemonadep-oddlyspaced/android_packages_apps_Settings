@@ -7,11 +7,17 @@
 
     <color name="derpfest_icon_background">@android:color/system_neutral2_50</color>
 
-    <!-- Light mark on a darkened wallpaper in both themes. -->
-    <color name="about_header_maintainer_chip">#33FFFFFF</color>
-    <color name="about_header_maintainer_chip_text">#FFFFFFFF</color>
-    <color name="about_header_scrim_start">#33000000</color>
-    <color name="about_header_scrim_center">#14000000</color>
-    <color name="about_header_scrim_end">#24000000</color>
+    <!-- Light text on a wallpaper darkened toward the bottom, in both themes. -->
+    <color name="about_header_maintainer_chip">#26FFFFFF</color>
+    <color name="about_header_text">#FFFFFFFF</color>
+    <color name="about_header_text_secondary">#CCFFFFFF</color>
+    <color name="about_header_accent">@android:color/system_accent1_200</color>
+    <color name="about_header_accent_on">@android:color/system_accent1_800</color>
+    <color name="about_header_scrim_start">#00000000</color>
+    <color name="about_header_scrim_center">#1A000000</color>
+    <color name="about_header_scrim_end">#B3000000</color>
+
+    <color name="about_tile_accent">@android:color/system_accent1_600</color>
+    <color name="about_tile_chip_outline">@android:color/system_accent1_600</color>
 
 </resources>

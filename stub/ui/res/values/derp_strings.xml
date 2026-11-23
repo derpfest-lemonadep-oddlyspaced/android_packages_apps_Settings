@@ -17,8 +17,18 @@
 
     <string name="derpfest_device_title">Device</string>
     <string name="derpfest_memory_storage_title">Memory</string>
-    <string name="derpfest_battery_size_title">Battery Capacity</string>
-    <string name="derpfest_screen_res_title">Screen Resolution</string>
+    <string name="derpfest_battery_size_title">Battery</string>
+    <string name="derpfest_screen_res_title">Display</string>
+
+    <!-- About phone header title. %1$s is the DerpFest version, e.g. 17. -->
+    <string name="derpfest_about_header_title">DerpFest <xliff:g id="version">%1$s</xliff:g></string>
+    <!-- About phone header build line. %1$s is the release, e.g. Community Stable, %2$s the build date. -->
+    <string name="derpfest_about_header_build"><xliff:g id="release">%1$s</xliff:g> · <xliff:g id="date">%2$s</xliff:g></string>
+    <!-- Device tile detail. %1$s is the model number, %2$s the device codename. -->
+    <string name="derpfest_device_detail"><xliff:g id="model">%1$s</xliff:g> · <xliff:g id="device">%2$s</xliff:g></string>
+    <!-- Memory tile, for TextUtils.expandTemplate. ^1 is the RAM, ^2 the storage, each with its unit. -->
+    <string name="derpfest_memory_storage_summary">^1 / ^2</string>
+    <string name="derpfest_software_category">Software</string>
 
     <string name="sim_num_info_cat">Phone number</string>
 </resources>

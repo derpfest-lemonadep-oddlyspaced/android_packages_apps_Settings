@@ -42,45 +42,52 @@
 
     <PreferenceCategory
         android:order="-180">
-        <!-- Abput phone info header -->
+        <!-- Hardware tiles -->
         <com.android.settingslib.widget.LayoutPreference
             android:key="about_phone_info_header"
             android:layout="@layout/about_phone_info_header"
             android:selectable="false" />
     </PreferenceCategory>
 
-    <!-- Android version -->
-    <com.android.settingslib.widget.LayoutPreference
-        android:key="firmware_version"
-        android:title="@string/firmware_version"
-        android:summary="@string/summary_placeholder"
-        android:fragment="com.android.settings.deviceinfo.firmwareversion.FirmwareVersionSettings"
-        android:layout="@layout/derpfest_about_card_single_entry"
-        settings:controller="com.android.settings.deviceinfo.aboutphone.AboutDeviceFirmwareVersionPreferenceController"/>
+    <PreferenceCategory
+        android:key="software_category"
+        android:order="-170"
+        android:title="@string/derpfest_software_category">
 
-    <!-- Security patch level -->
-    <com.android.settingslib.widget.LayoutPreference
-        android:key="security_patch_level"
-        android:title="@string/security_patch"
-        android:summary="@string/summary_placeholder"
-        android:layout="@layout/derpfest_about_card_single_entry"
-        settings:controller="com.android.settings.deviceinfo.aboutphone.AboutDeviceSecurityPatchLevelPreferenceController"/>
+        <!-- Android version -->
+        <Preference
+            android:key="firmware_version"
+            android:title="@string/firmware_version"
+            android:summary="@string/summary_placeholder"
+            android:fragment="com.android.settings.deviceinfo.firmwareversion.FirmwareVersionSettings"
+            settings:controller="com.android.settings.deviceinfo.aboutphone.AboutDeviceFirmwareVersionPreferenceController"/>
 
-    <!-- Build number -->
-    <com.android.settingslib.widget.LayoutPreference
-        android:key="build_number"
-        android:title="@string/build_number"
-        android:summary="@string/summary_placeholder"
-        settings:enableCopying="true"
-        android:layout="@layout/derpfest_about_card_single_entry"
-        settings:controller="com.android.settings.deviceinfo.BuildNumberPreferenceController"/>
+        <!-- Security patch level -->
+        <Preference
+            android:key="security_patch_level"
+            android:title="@string/security_patch"
+            android:summary="@string/summary_placeholder"
+            settings:controller="com.android.settings.deviceinfo.aboutphone.AboutDeviceSecurityPatchLevelPreferenceController"/>
 
-    <!-- Device Info -->
-    <com.android.settingslib.widget.LayoutPreference
-        android:key="top_level_about_device"
-        android:title="@string/more_device_info"
-        android:layout="@layout/derpfest_about_card_single_entry"
-        android:fragment="com.android.settings.deviceinfo.aboutphone.MyDeviceInfoFragment"
-        settings:controller="com.android.settings.deviceinfo.firmwareversion.MoreInfoPreferenceController"/>        
+        <!-- Build number -->
+        <Preference
+            android:key="build_number"
+            android:title="@string/build_number"
+            android:summary="@string/summary_placeholder"
+            settings:enableCopying="true"
+            settings:controller="com.android.settings.deviceinfo.BuildNumberPreferenceController"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="more_info_category"
+        android:order="-160">
+
+        <!-- Device Info -->
+        <Preference
+            android:key="top_level_about_device"
+            android:title="@string/more_device_info"
+            android:fragment="com.android.settings.deviceinfo.aboutphone.MyDeviceInfoFragment"
+            settings:controller="com.android.settings.deviceinfo.firmwareversion.MoreInfoPreferenceController"/>
+    </PreferenceCategory>
 
 </PreferenceScreen>

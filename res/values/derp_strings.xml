@@ -40,9 +40,6 @@
     <string name="derp_official_title">Did you know?</string>
     <string name="derp_official_summary">You\'re currently running an official build of DerpFest.</string>
 
-    <!-- About Device - Custom firmware version display -->
-    <string name="about_device_firmware_version" translatable="false">Android 17</string>
-
     <!-- Ambient wake -->
     <string name="doze_gesture_ambient_title">Show Ambient</string>
     <string name="doze_gesture_ambient_summary">Show Ambient Display instead of fully waking the screen up</string>

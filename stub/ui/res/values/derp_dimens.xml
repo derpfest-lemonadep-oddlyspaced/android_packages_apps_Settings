@@ -24,7 +24,9 @@
     <dimen name="derpfest_dashboard_tile_image_size">46dp</dimen>
     <dimen name="derpfest_dashboard_tile_foreground_image_size">16dp</dimen>
 
-    <dimen name="derpfest_hw_info_icons">30dp</dimen>
+    <dimen name="about_hero_radius">28dp</dimen>
+    <dimen name="about_tile_radius">28dp</dimen>
+    <dimen name="about_tile_gap">6dp</dimen>
     <dimen name="derpfest_vertical_padding">20dp</dimen>
 
 </resources>

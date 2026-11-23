@@ -20,7 +20,11 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.SystemProperties;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.TextUtils;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
@@ -38,12 +42,20 @@ import com.android.settings.core.BasePreferenceController;
 import com.android.settingslib.utils.ThreadUtils;
 import com.android.settingslib.widget.LayoutPreference;
 
+import java.text.DateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 public class DerpFestHeaderPreferenceController extends BasePreferenceController
         implements DefaultLifecycleObserver {
 
     private static final String TAG = "DerpFestHeader";
     private static final int CAPTURE_ATTEMPTS = 20;
     private static final long CAPTURE_INTERVAL_MS = 150L;
+    private static final String PROP_VERSION = "ro.derpfest.version";
+    private static final String PROP_RELEASE_TYPE = "ro.derpfest.releasetype";
+    private static final String PROP_BUILD_VARIANT = "ro.derpfest.build.variant";
+    private static final String PROP_BUILD_DATE = "ro.build.date.utc";
     private static final String CHANGELOG_ACTIVITY = "org.derpfest.changelog.MainActivity";
     /** Product package first. The suffix is the sideloaded debug build. */
     private static final String[] CHANGELOG_PACKAGES = {
@@ -109,11 +121,53 @@ public class DerpFestHeaderPreferenceController extends BasePreferenceController
         if (mPreference == null) {
             return;
         }
+        TextView title = mPreference.findViewById(R.id.about_header_title);
+        if (title != null) {
+            title.setText(getTitle());
+        }
+        TextView build = mPreference.findViewById(R.id.about_header_build);
+        if (build != null) {
+            build.setText(getBuildLine());
+        }
+        String maintainer = getMaintainer();
         TextView summary = mPreference.findViewById(R.id.status_summary);
         if (summary != null) {
-            summary.setText(getMaintainerLabel());
+            summary.setText(maintainer);
+        }
+        TextView initial = mPreference.findViewById(R.id.about_header_maintainer_initial);
+        if (initial != null) {
+            initial.setText(maintainer.substring(0, maintainer.offsetByCodePoints(0, 1))
+                    .toUpperCase(Locale.getDefault()));
         }
         bindChangelog();
+    }
+
+    /** DerpFest and its version, with the version in the accent color. */
+    private CharSequence getTitle() {
+        String version = SystemProperties.get(PROP_VERSION);
+        if (TextUtils.isEmpty(version)) {
+            return "DerpFest";
+        }
+        String title = mContext.getString(R.string.derpfest_about_header_title, version);
+        SpannableString text = new SpannableString(title);
+        int start = title.lastIndexOf(version);
+        text.setSpan(new ForegroundColorSpan(mContext.getColor(R.color.about_header_accent)),
+                start, start + version.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        return text;
+    }
+
+    /** The release type and variant, then the build date, as in "Community Stable · 23 Nov 2026". */
+    private String getBuildLine() {
+        String release = (SystemProperties.get(PROP_RELEASE_TYPE) + " "
+                + SystemProperties.get(PROP_BUILD_VARIANT)).trim();
+        long buildTime = SystemProperties.getLong(PROP_BUILD_DATE, 0L) * 1000L;
+        String date = buildTime > 0
+                ? DateFormat.getDateInstance(DateFormat.MEDIUM).format(new Date(buildTime))
+                : "";
+        if (release.isEmpty() || date.isEmpty()) {
+            return release.isEmpty() ? date : release;
+        }
+        return mContext.getString(R.string.derpfest_about_header_build, release, date);
     }
 
     private void bindChangelog() {
@@ -170,12 +224,16 @@ public class DerpFestHeaderPreferenceController extends BasePreferenceController
         mContext.startActivity(intent);
     }
 
-    private String getMaintainerLabel() {
+    private String getMaintainer() {
         String maintainer = mContext.getString(R.string.derpfest_maintainer);
         if (TextUtils.isEmpty(maintainer)) {
             maintainer = mContext.getString(R.string.derpfest_maintainer_unofficial);
         }
-        return String.format(mContext.getString(R.string.derpfest_summary), maintainer);
+        return maintainer;
+    }
+
+    private String getMaintainerLabel() {
+        return String.format(mContext.getString(R.string.derpfest_summary), getMaintainer());
     }
 
     private void refreshWallpaper() {

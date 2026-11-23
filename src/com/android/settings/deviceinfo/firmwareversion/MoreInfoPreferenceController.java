@@ -16,15 +16,9 @@
 
 package com.android.settings.deviceinfo.firmwareversion;
 
-import android.view.View;
-import android.widget.TextView;
 import android.content.Context;
 
-import androidx.preference.PreferenceScreen;
-
-import com.android.settings.R;
 import com.android.settings.core.BasePreferenceController;
-import com.android.settingslib.widget.LayoutPreference;
 
 public class MoreInfoPreferenceController extends BasePreferenceController {
 
@@ -40,30 +34,5 @@ public class MoreInfoPreferenceController extends BasePreferenceController {
     @Override
     public CharSequence getSummary() {
         return "";
-    }
-
-    @Override
-    public void displayPreference(PreferenceScreen screen) {
-        super.displayPreference(screen);
-        
-        LayoutPreference preference = (LayoutPreference) screen.findPreference(getPreferenceKey());
-        if (preference != null) {
-            // Get the root view of your custom layout
-            View widgetFrame = preference.findViewById(android.R.id.widget_frame);
-            if (widgetFrame != null && widgetFrame.getParent() instanceof View) {
-                ((View) widgetFrame.getParent()).setBackground(null);
-            }
-            
-            // Populate the TextViews manually
-            TextView titleView = preference.findViewById(android.R.id.title);
-            TextView summaryView = preference.findViewById(android.R.id.summary);
-            
-            if (titleView != null) {
-                titleView.setText(mContext.getString(R.string.more_device_info));
-            }
-            if (summaryView != null) {
-                summaryView.setVisibility(View.GONE); // Hide summary for "More info"
-            }
-        }
     }
 }
